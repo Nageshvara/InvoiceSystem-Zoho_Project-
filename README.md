@@ -1,5 +1,7 @@
 # InvoiceSystem-Zoho_Project-
 
+The executable files are present in `src` folder.
+
 ### App.java:
 
 The `main` method serves as the entry point for the Java application, providing a command-line interface for interacting with a MySQL database managing customer, product, and invoice records.
