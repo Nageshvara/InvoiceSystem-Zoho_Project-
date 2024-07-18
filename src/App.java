@@ -54,7 +54,20 @@ public class App {
                     case 5:
                         System.out.println("Enter customer ID:");
                         int customerId = scanner.nextInt();
-                        generateInvoice(stmt, customerId);
+                        scanner.nextLine(); // Consume newline
+
+                        // Ask for discount
+                        System.out.print("Do you want to apply a discount to the total amount? (yes/no): ");
+                        String applyDiscount = scanner.nextLine().trim().toLowerCase();
+                        double discountPercentage = 0.0;
+                        if (applyDiscount.equals("yes")) {
+                            System.out.print("Enter discount percentage (%): ");
+                            discountPercentage = scanner.nextDouble();
+                            scanner.nextLine(); // Consume newline
+                        }
+
+                        // Call generateInvoice function with discount percentage
+                        generateInvoice(stmt, customerId, discountPercentage);
                         break;
                     case 6:
                         showSalesReport(stmt, scanner);
@@ -455,7 +468,8 @@ public class App {
         rs.close();
     }
 
-    public static void generateInvoice(Statement stmt, int customerId) throws SQLException, IOException {
+    public static void generateInvoice(Statement stmt, int customerId, double discountPercentage)
+            throws SQLException, IOException {
         String customerSql = "SELECT * FROM customers WHERE cust_id = " + customerId;
         ResultSet customerRs = stmt.executeQuery(customerSql);
         if (!customerRs.next()) {
@@ -467,7 +481,7 @@ public class App {
         String customerContact = customerRs.getString("contactno");
         customerRs.close();
 
-        String invoiceSql = "SELECT i.id, p.pname, i.quantity, p.unit, p.price, i.amount "
+        String invoiceSql = "SELECT i.id, p.pname, i.quantity, p.unit, p.price, i.amount, i.status "
                 + "FROM Invoice i JOIN products p ON i.product_id = p.prod_id "
                 + "WHERE i.customer_id = " + customerId;
         ResultSet invoiceRs = stmt.executeQuery(invoiceSql);
@@ -507,24 +521,55 @@ public class App {
             writer.write(String.format("%154s\n",
                     "----------------------------------------------------------------------------------------------------------------------------------------"));
             double totalAmount = 0;
+            double totalPaid = 0;
+            double totalDue = 0;
+
             do {
                 String productName = invoiceRs.getString("pname");
                 int quantity = invoiceRs.getInt("quantity");
                 String unit = invoiceRs.getString("unit");
                 double price = invoiceRs.getDouble("price");
                 double amount = invoiceRs.getDouble("amount");
+                String status = invoiceRs.getString("status");
 
                 writer.write(
                         String.format("%30s %30d %30s %30.2f %30.2f\n", productName, quantity, unit, price, amount));
+
+                if ("paid".equalsIgnoreCase(status)) {
+                    totalPaid += amount;
+                } else {
+                    totalDue += amount;
+                }
+
                 totalAmount += amount;
             } while (invoiceRs.next());
+
             writer.write("\n");
             // Adding dashed line before the total amount
             writer.write(String.format("%154s\n",
                     "----------------------------------------------------------------------------------------------------------------------------------------"));
-
-            // Adding the total amount
             writer.write(String.format("%147s %-30.2f\n", "Total Amount:", totalAmount));
+            // Apply discount if applicable
+            if (discountPercentage > 0) {
+                double discountAmount = (discountPercentage / 100.0) * totalAmount;
+                double discountedTotal = totalAmount - discountAmount;
+
+                writer.write(String.format("%147s %-30.2f\n", "Discount Applied (" + discountPercentage + "%):",
+                        discountAmount));
+                writer.write(String.format("%154s\n",
+                        "----------------------------------------------------------------------------------------------------------------------------------------"));
+                writer.write(String.format("%147s %-30.2f\n", "Discounted Total:", discountedTotal));
+                writer.write("\n\n");
+                // Calculate amount paid and amount due based on totalPaid and totalDue
+                writer.write(String.format("%147s %-30.2f\n", "Amount Paid:", totalPaid));
+                writer.write("\n");
+                writer.write(String.format("%147s %-30.2f\n", "Amount Due:", discountedTotal - totalPaid));
+            } else {
+                // Calculate amount paid and amount due without discount
+                writer.write(String.format("%147s %-30.2f\n", "Amount Paid:", totalPaid));
+                writer.write(String.format("%147s %-30.2f\n", "Amount Due:", totalDue));
+            }
+
         }
 
         System.out.println("Invoice generated successfully: " + fileName);
