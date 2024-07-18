@@ -77,8 +77,6 @@ This method retrieves and prints the column names of a specified database table.
 - **Description:**
   Executes a query to fetch metadata for the specified table (`tableName`) and prints each column name. This method helps in identifying the structure of the table dynamically.
 
----
-
 #### `generateInvoice(Statement stmt, int customerId)`
 Generates an invoice for a specified customer including customer details, purchased products, and total amount.
 
@@ -88,8 +86,6 @@ Generates an invoice for a specified customer including customer details, purcha
 
 - **Description:**
   Retrieves customer details (`name`, `contact number`) and invoice details (`product name`, `quantity`, `unit`, `price`, `amount`) by executing SQL queries joining the `customers`, `products`, and `Invoice` tables. Generates a text file formatted as an invoice and saves it to a directory (`./invoices/`) with a filename based on customer and date information.
-
----
 
 #### `showSalesReport(Statement stmt, Scanner scanner)`
 Displays sales reports based on user input: today's sales report or a sales report for a specific date.
@@ -101,8 +97,6 @@ Displays sales reports based on user input: today's sales report or a sales repo
 - **Description:**
   Presents a menu to select between today's sales report or a report for a specific date (`YYYY-MM-DD` format). Executes corresponding methods based on user choice (`showTodaySalesReport` or `showSalesReportForDate`).
 
----
-
 #### `showTodaySalesReport(Statement stmt, Scanner scanner)`
 Displays today's sales report using the `showSalesReportForDate` method.
 
@@ -112,8 +106,6 @@ Displays today's sales report using the `showSalesReportForDate` method.
 
 - **Description:**
   Fetches today's date and invokes `showSalesReportForDate` with the formatted date string (`YYYY-MM-DD`).
-
----
 
 #### `showSalesReportForDate(Statement stmt, String dateStr, Scanner scanner)`
 Displays sales report for a specified date, including individual product sales details and total units sold with revenue.
@@ -125,8 +117,6 @@ Displays sales report for a specified date, including individual product sales d
 
 - **Description:**
   Executes SQL queries to fetch sales data (`product name`, `quantity`, `amount`) for the specified date. Prints a tabular format report with individual product sales details and calculates total units sold and revenue. Offers the option to download the generated report as a text file (`Sales_Report_YYYY-MM-DD.txt`) in a specified directory (`./salesreports/`).
-
----
 
 #### `downloadReport(String report, String dateStr)`
 Downloads a sales report as a text file.
