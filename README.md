@@ -79,31 +79,27 @@ This method retrieves and prints the column names of a specified database table.
 - **Description:**
   Executes a query to fetch metadata for the specified table (`tableName`) and prints each column name. This method helps in identifying the structure of the table dynamically.
 
-Here's how you can structure the description for the `generateInvoice` function in your GitHub README file:
-
----
-
 #### `generateInvoice` Function
 
 The `generateInvoice` function generates an invoice for a specified customer by querying the database for customer details, associated products, and invoice items. It calculates the total amount, applies a discount if provided, and distinguishes between paid and unpaid invoices. Finally, it writes the invoice details to a text file.
 
 - **Parameters:**
 
-- `stmt`: An instance of `Statement` used to execute SQL queries.
-- `customerId`: The unique identifier of the customer for whom the invoice is generated.
-- `discountPercentage`: Optional. The percentage of discount to be applied to the total invoice amount.
+  - `stmt`: An instance of `Statement` used to execute SQL queries.
+  - `customerId`: The unique identifier of the customer for whom the invoice is generated.
+  - `discountPercentage`: Optional. The percentage of discount to be applied to the total invoice amount.
 
--**Functionality:**
+- **Functionality:**
 
-1. **Customer Lookup**: Queries the `customers` table to retrieve customer details such as name and contact information based on `customerId`.
+  1. **Customer Lookup**: Queries the `customers` table to retrieve customer details such as name and contact information based on `customerId`.
 
-2. **Invoice Retrieval**: Retrieves invoice details including product names, quantities, prices, amounts, and status (`paid` or `unpaid`) from the `Invoice` table using a join with `products`.
+  2. **Invoice Retrieval**: Retrieves invoice details including product names, quantities, prices, amounts, and status (`paid` or `unpaid`) from the `Invoice` table using a join with `products`.
 
-3. **File Output**: Writes the invoice details to a text file in the `./invoices/` directory, formatted with headers, product details, total amount, applied discounts (if any), and amounts paid versus amounts due.
+  3. **File Output**: Writes the invoice details to a text file in the `./invoices/` directory, formatted with headers, product details, total amount, applied discounts (if any), and amounts paid versus amounts due.
 
-4. **Handling Discounts**: If a discount percentage is provided, calculates the discounted total and displays the discounted amount separately.
+  4. **Handling Discounts**: If a discount percentage is provided, calculates the discounted total and displays the discounted amount separately.
 
-5. **Amount Tracking**: Tracks and displays the total amount paid and the amount due based on the status of each invoice item.
+  5. **Amount Tracking**: Tracks and displays the total amount paid and the amount due based on the status of each invoice item.
 
 #### `showSalesReport(Statement stmt, Scanner scanner)`
 Displays sales reports based on user input: today's sales report or a sales report for a specific date.
