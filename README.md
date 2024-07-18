@@ -1,6 +1,6 @@
 # InvoiceSystem-Zoho_Project-
 
-#### App.java:
+### App.java:
 
 The `main` method serves as the entry point for the Java application, providing a command-line interface for interacting with a MySQL database managing customer, product, and invoice records.
 
@@ -67,7 +67,7 @@ This method provides a menu-driven interface to manipulate data in specified dat
   - **Navigation:**
     - Allows the user to return to the main menu (`Back to Main Menu`) to choose a different operation or exit the application.
 
-### `printColumnNames(Statement stmt, String tableName)`
+#### `printColumnNames(Statement stmt, String tableName)`
 This method retrieves and prints the column names of a specified database table.
 
 - **Parameters:**
@@ -79,7 +79,7 @@ This method retrieves and prints the column names of a specified database table.
 
 ---
 
-### `generateInvoice(Statement stmt, int customerId)`
+#### `generateInvoice(Statement stmt, int customerId)`
 Generates an invoice for a specified customer including customer details, purchased products, and total amount.
 
 - **Parameters:**
@@ -91,7 +91,7 @@ Generates an invoice for a specified customer including customer details, purcha
 
 ---
 
-### `showSalesReport(Statement stmt, Scanner scanner)`
+#### `showSalesReport(Statement stmt, Scanner scanner)`
 Displays sales reports based on user input: today's sales report or a sales report for a specific date.
 
 - **Parameters:**
@@ -103,7 +103,7 @@ Displays sales reports based on user input: today's sales report or a sales repo
 
 ---
 
-### `showTodaySalesReport(Statement stmt, Scanner scanner)`
+#### `showTodaySalesReport(Statement stmt, Scanner scanner)`
 Displays today's sales report using the `showSalesReportForDate` method.
 
 - **Parameters:**
@@ -115,7 +115,7 @@ Displays today's sales report using the `showSalesReportForDate` method.
 
 ---
 
-### `showSalesReportForDate(Statement stmt, String dateStr, Scanner scanner)`
+#### `showSalesReportForDate(Statement stmt, String dateStr, Scanner scanner)`
 Displays sales report for a specified date, including individual product sales details and total units sold with revenue.
 
 - **Parameters:**
@@ -128,7 +128,7 @@ Displays sales report for a specified date, including individual product sales d
 
 ---
 
-### `downloadReport(String report, String dateStr)`
+#### `downloadReport(String report, String dateStr)`
 Downloads a sales report as a text file.
 
 - **Parameters:**
