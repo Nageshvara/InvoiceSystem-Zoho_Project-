@@ -10,10 +10,9 @@ public class Customer {
     }
 
     public void updateData(Statement stmt, String setClause, String whereClause) throws SQLException {
-        // Check for restricted columns in the setClause
+
         if (setClause.contains("TOTAL_PURCHASES") || setClause.contains("Paid")
                 || setClause.contains("Remaining_Balance")) {
-            // Print appropriate messages if restricted columns are found
             if (setClause.contains("TOTAL_PURCHASES")) {
                 System.out.println(
                         "The TOTAL_PURCHASES column is updated automatically according to your invoices, you can't update it.");
@@ -22,10 +21,9 @@ public class Customer {
                 System.out.println(
                         "The Paid and Remaining_Balance columns are related to your purchases, you can't update them!");
             }
-            return; // Exit the method without executing the update
+            return; 
         }
 
-        // If no restricted columns are found, execute the update
         String sql = "UPDATE customers SET " + setClause + " WHERE " + whereClause;
         int rowsAffected = stmt.executeUpdate(sql);
         System.out.println(rowsAffected + " rows updated in customers table successfully.");
