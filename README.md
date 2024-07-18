@@ -138,9 +138,10 @@ Downloads a sales report as a text file.
 - **Description:**
   Creates a directory (`./salesreports/`) if it doesn't exist and writes the provided `report` content into a text file (`Sales_Report_YYYY-MM-DD.txt`). This method facilitates saving and accessing generated sales reports.
 
----
 
 These methods collectively facilitate database operations, invoice generation, and sales reporting functionalities in a Java application using JDBC for SQL interactions and user input handling through a console interface.
+
+---
 
 ### Customers.java:
 
@@ -198,6 +199,8 @@ This method updates the `TOTAL_PURCHASES`, `Paid`, and `Remaining_Balance` colum
 
 Each statement updates the respective column with the total amount of paid or unpaid invoices and the total number of invoices for the specified customer.
 
+---
+
 ### Products.java:
 
 This class manages operations related to product data in the `products` table. The `products` table includes columns for product ID, product name, price, available quantity, and unit. Below are detailed descriptions of each method:
@@ -250,6 +253,8 @@ This method deletes product data from the `products` table.
   Constructs and executes an SQL `DELETE FROM` statement to delete records from the `products` table based on the provided `whereClause`. It prints the number of rows affected upon successful deletion.
 
 These methods provide essential functionalities for managing product data within the application, ensuring CRUD (Create, Read, Update, Delete) operations can be performed effectively on the `products` table in the database.
+
+---
 
 ### Invoice.java:
 
