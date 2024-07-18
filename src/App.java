@@ -23,7 +23,6 @@ public class App {
             Product product = new Product();
             Invoice invoice = new Invoice();
             while (true) {
-                // Print the initial menu with "ABC SUPERMARKET" at the top
                 System.out.println(String.format("%80s\n", "ABC SUPERMARKET"));
                 System.out.println(String.format("%126s\n",
                         "--------------------------------------------------------------------------------------------------------------"));
@@ -54,19 +53,15 @@ public class App {
                     case 5:
                         System.out.println("Enter customer ID:");
                         int customerId = scanner.nextInt();
-                        scanner.nextLine(); // Consume newline
-
-                        // Ask for discount
+                        scanner.nextLine(); 
                         System.out.print("Do you want to apply a discount to the total amount? (yes/no): ");
                         String applyDiscount = scanner.nextLine().trim().toLowerCase();
                         double discountPercentage = 0.0;
                         if (applyDiscount.equals("yes")) {
                             System.out.print("Enter discount percentage (%): ");
                             discountPercentage = scanner.nextDouble();
-                            scanner.nextLine(); // Consume newline
+                            scanner.nextLine(); 
                         }
-
-                        // Call generateInvoice function with discount percentage
                         generateInvoice(stmt, customerId, discountPercentage);
                         break;
                     case 6:
@@ -144,7 +139,7 @@ public class App {
                             String name = scanner.nextLine();
                             System.out.println("Enter age:");
                             int age = scanner.nextInt();
-                            scanner.nextLine(); // consume the newline character
+                            scanner.nextLine(); 
                             System.out.println("Enter contact number:");
                             String contactNo = scanner.nextLine();
                             customer.insertData(stmt, name, age, contactNo);
@@ -165,10 +160,9 @@ public class App {
                         case 4:
                             System.out.println("All customer Details (1) or Particular Customer (2)?");
                             int innerChoice = scanner.nextInt();
-                            scanner.nextLine(); // Consume newline character after reading integer
+                            scanner.nextLine(); 
 
                             if (innerChoice == 1) {
-                                // Display all customers
                                 String sql = "SELECT * FROM customers";
                                 ResultSet rs = stmt.executeQuery(sql);
                                 ResultSetMetaData rsmd = rs.getMetaData();
@@ -184,17 +178,14 @@ public class App {
                                 }
                                 rs.close();
                             } else if (innerChoice == 2) {
-                                // Display particular customer details
                                 System.out.println("Enter customer ID or Name:");
                                 String input = scanner.nextLine().trim();
 
                                 String sql;
                                 if (input.matches("\\d+")) {
-                                    // If input is numeric, assume it's customer ID
                                     int customerId = Integer.parseInt(input);
                                     sql = "SELECT * FROM customers WHERE cust_id = " + customerId;
                                 } else {
-                                    // Otherwise, treat it as customer name
                                     sql = "SELECT * FROM customers WHERE cname = '" + input + "'";
                                 }
 
@@ -238,7 +229,7 @@ public class App {
                             int price = scanner.nextInt();
                             System.out.println("Enter available quantity:");
                             int availableQuantity = scanner.nextInt();
-                            scanner.nextLine(); // consume the newline character
+                            scanner.nextLine(); 
                             System.out.println("Enter unit:");
                             String unit = scanner.nextLine();
                             product.insertData(stmt, pname, price, availableQuantity, unit);
@@ -257,13 +248,11 @@ public class App {
                             product.deleteData(stmt, whereClause);
                             break;
                         case 4:
-                            // View Data in Products Table
                             System.out.println("All product Details (1) or Particular Product (2)?");
                             int innerChoice = scanner.nextInt();
-                            scanner.nextLine(); // Consume newline character after reading integer
+                            scanner.nextLine(); 
 
                             if (innerChoice == 1) {
-                                // Display all products
                                 String sql = "SELECT * FROM products";
                                 ResultSet rs = stmt.executeQuery(sql);
                                 ResultSetMetaData rsmd = rs.getMetaData();
@@ -279,18 +268,15 @@ public class App {
                                 }
                                 rs.close();
                             } else if (innerChoice == 2) {
-                                // Display particular product details
                                 System.out.println("Enter product ID or Name:");
                                 String input = scanner.nextLine().trim();
 
                                 try {
                                     String sql;
                                     if (input.matches("\\d+")) {
-                                        // If input is numeric, assume it's product ID
                                         int productId = Integer.parseInt(input);
                                         sql = "SELECT * FROM products WHERE prod_id = " + productId;
                                     } else {
-                                        // Otherwise, treat it as product name
                                         sql = "SELECT * FROM products WHERE pname = '" + input + "'";
                                     }
 
@@ -337,7 +323,6 @@ public class App {
                             System.out.println("Enter product ID:");
                             int productId = scanner.nextInt();
 
-                            // Retrieve and print the available quantity of the product
                             String getProductQuantitySql = "SELECT pname,available_quantity FROM products WHERE prod_id = "
                                     + productId;
                             ResultSet rs = stmt.executeQuery(getProductQuantitySql);
@@ -357,7 +342,7 @@ public class App {
 
                             System.out.println("Enter quantity:");
                             int quantity = scanner.nextInt();
-                            scanner.nextLine(); // consume the newline character
+                            scanner.nextLine(); 
                             System.out.println("Enter status (Paid/Not Paid):");
                             String status = scanner.nextLine();
                             invoice.insertData(stmt, customerId, productId, quantity, status);
@@ -377,13 +362,11 @@ public class App {
                             invoice.deleteData(stmt, whereClause);
                             break;
                         case 4:
-                            // View Data in Invoice Table
                             System.out.println("All Invoice Details for Customer (1) or Particular Customer (2)?");
                             int innerChoice = scanner.nextInt();
-                            scanner.nextLine(); // Consume newline character after reading integer
+                            scanner.nextLine(); 
 
                             if (innerChoice == 1) {
-                                // Display all invoices for all customers
                                 String sql = "SELECT * FROM Invoice";
                                 ResultSet rsb = stmt.executeQuery(sql);
                                 ResultSetMetaData rsmd = rsb.getMetaData();
@@ -399,17 +382,14 @@ public class App {
                                 }
                                 rsb.close();
                             } else if (innerChoice == 2) {
-                                // Display invoices for a particular customer
                                 System.out.println("Enter customer ID or Name:");
                                 String customerInput = scanner.nextLine();
 
                                 try {
                                     String customerIdQuery = "";
                                     if (customerInput.matches("\\d+")) {
-                                        // If input is a number, treat it as customer ID
                                         customerIdQuery = "customer_id = " + Integer.parseInt(customerInput);
                                     } else {
-                                        // If input is not a number, treat it as customer name
                                         customerIdQuery = "customer_id IN (SELECT cust_id FROM customers WHERE cname = '"
                                                 + customerInput + "')";
                                     }
@@ -490,8 +470,6 @@ public class App {
             System.out.println("No invoices found for this customer.");
             return;
         }
-
-        // Define the directory to save the invoice
         String directoryPath = "./invoices/";
         File directory = new File(directoryPath);
         if (!directory.exists()) {
@@ -508,16 +486,12 @@ public class App {
             writer.write(String.format("%-10s %s%150s %s%26s\n", "Invoice No:", invoiceRs.getInt("id"), "Date:",
                     LocalDate.now(), ""));
             writer.write("\n\n\n");
-
-            // Adding dashed line before the headings
             writer.write(String.format("%154s\n",
                     "----------------------------------------------------------------------------------------------------------------------------------------"));
             writer.write("\n");
-            // Adding the headings
             writer.write(
                     String.format("%30s %30s %30s %30s %30s\n", "Product Name", "Quantity", "Unit", "Price", "Amount"));
             writer.write("\n");
-            // Adding dashed line after the headings
             writer.write(String.format("%154s\n",
                     "----------------------------------------------------------------------------------------------------------------------------------------"));
             double totalAmount = 0;
@@ -545,11 +519,9 @@ public class App {
             } while (invoiceRs.next());
 
             writer.write("\n");
-            // Adding dashed line before the total amount
             writer.write(String.format("%154s\n",
                     "----------------------------------------------------------------------------------------------------------------------------------------"));
             writer.write(String.format("%147s %-30.2f\n", "Total Amount:", totalAmount));
-            // Apply discount if applicable
             if (discountPercentage > 0) {
                 double discountAmount = (discountPercentage / 100.0) * totalAmount;
                 double discountedTotal = totalAmount - discountAmount;
@@ -560,12 +532,10 @@ public class App {
                         "----------------------------------------------------------------------------------------------------------------------------------------"));
                 writer.write(String.format("%147s %-30.2f\n", "Discounted Total:", discountedTotal));
                 writer.write("\n\n");
-                // Calculate amount paid and amount due based on totalPaid and totalDue
                 writer.write(String.format("%147s %-30.2f\n", "Amount Paid:", totalPaid));
                 writer.write("\n");
                 writer.write(String.format("%147s %-30.2f\n", "Amount Due:", discountedTotal - totalPaid));
             } else {
-                // Calculate amount paid and amount due without discount
                 writer.write(String.format("%147s %-30.2f\n", "Amount Paid:", totalPaid));
                 writer.write(String.format("%147s %-30.2f\n", "Amount Due:", totalDue));
             }
@@ -581,7 +551,7 @@ public class App {
         System.out.println("1. Today's Sales Report");
         System.out.println("2. Sales Report for a Specific Date");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine(); 
 
         switch (choice) {
             case 1:
@@ -611,7 +581,6 @@ public class App {
                     "WHERE date = '" + dateStr + "'";
             ResultSet rs = stmt.executeQuery(sql);
 
-            // Print individual product sales details in a tabular format
             System.out.println("Sales Report for " + dateStr + ":");
             report.append("Sales Report for ").append(dateStr).append(":\n");
             System.out.println("+---------------------------------------------+");
@@ -632,7 +601,6 @@ public class App {
             System.out.println("+----------------------+------------+-----------------+");
             report.append("+----------------------+------------+-----------------+\n");
 
-            // Fetch total units and revenue
             sql = "SELECT SUM(quantity) AS total_units, SUM(amount) AS total_revenue " +
                     "FROM Invoice " +
                     "WHERE date = '" + dateStr + "'";
